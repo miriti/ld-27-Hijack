@@ -1,28 +1,36 @@
-package 
+package
 {
 	import flash.display.Sprite;
 	import flash.events.Event;
-
+	import game.StateControll;
+	import starling.core.Starling;
+	
 	/**
 	 * ...
 	 * @author Michael Miriti
 	 */
 	[Frame(factoryClass="Preloader")]
-	public class Main extends Sprite 
+	
+	public class Main extends Sprite
 	{
-
-		public function Main():void 
+		private var starlingInstance:Starling;
+		
+		public function Main():void
 		{
-			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);
+			if (stage)
+				init();
+			else
+				addEventListener(Event.ADDED_TO_STAGE, init);
 		}
-
-		private function init(e:Event = null):void 
+		
+		private function init(e:Event = null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-			// entry point
+			
+			starlingInstance = new Starling(StateControll, stage);
+			starlingInstance.start();
 		}
-
+	
 	}
 
 }
