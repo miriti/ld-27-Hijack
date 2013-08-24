@@ -30,8 +30,6 @@ package game
 					{
 						GamePlayer.lastPlayer.x = i * scale + scale / 2;
 						GamePlayer.lastPlayer.y = j * scale + scale / 2;
-						
-						trace(GamePlayer.lastPlayer.x, GamePlayer.lastPlayer.y);
 					}
 				}
 			}
