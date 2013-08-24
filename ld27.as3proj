@@ -51,6 +51,7 @@
   <!-- SWC Libraries -->
   <libraryPaths>
     <element path="lib\greensock.swc" />
+    <element path="lib\nape-dev.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>

@@ -58,10 +58,7 @@ package game
 		
 		override protected function update(deltaTime:Number):void
 		{
-			if (_maze != null)
-			{
-				_maze.collisionEntity(this);
-			}
+			
 		}
 		
 		protected function setHealth(newHealth:Number):void

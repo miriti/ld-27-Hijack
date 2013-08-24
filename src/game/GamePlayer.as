@@ -1,6 +1,11 @@
 package game
 {
+	import flash.events.NetStatusEvent;
 	import flash.ui.Keyboard;
+	import nape.phys.Body;
+	import nape.phys.BodyType;
+	import nape.shape.Circle;
+	import nape.shape.Polygon;
 	import starling.display.Quad;
 	import starling.display.Sprite;
 	
@@ -10,12 +15,13 @@ package game
 	 */
 	public class GamePlayer extends Entity
 	{
-		static public const SPEED:Number = 5;
+		static public const SPEED:Number = 0.5;
 		
 		[Embed(source="../assets/entities/player/player.png")]
 		private static var _image:Class;
 		private var _crosshar:Crosshair;
 		static private var _lastPlayer:GamePlayer;
+		private var _body:Body;
 		
 		public function GamePlayer(crosshair:Crosshair)
 		{
@@ -23,6 +29,10 @@ package game
 			_radius = 20;
 			
 			_lastPlayer = this;
+			
+			_body = new Body(BodyType.DYNAMIC);
+			_body.shapes.add(new Circle(_radius));
+			Physix.space.bodies.add(_body);
 		}
 		
 		override protected function init():void
@@ -57,29 +67,37 @@ package game
 		
 		}
 		
+		public function setPosition(newX:Number, newY:Number):void
+		{
+			_body.position.setxy(newX, newY);
+		}
+		
 		override protected function update(deltaTime:Number):void
 		{
 			rotation = Math.atan2(y - _crosshar.y, x - _crosshar.x);
 			
 			if (Input.instance.isUp())
 			{
-				y -= SPEED;
+				_body.velocity.y = -SPEED;
 			}
 			
 			if (Input.instance.isDown())
 			{
-				y += SPEED;
+				_body.velocity.y = SPEED;
 			}
 			
 			if (Input.instance.isRight())
 			{
-				x += SPEED;
+				_body.velocity.x = SPEED;
 			}
 			
 			if (Input.instance.isLeft())
 			{
-				x -= SPEED;
-			}
+				_body.velocity.x = -SPEED;
+			}		
+			
+			x = _body.position.x;
+			y = _body.position.y;
 			
 			super.update(deltaTime);
 		}

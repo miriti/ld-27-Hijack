@@ -26,7 +26,7 @@ package game
 			countDown.hAlign = HAlign.CENTER;
 			addChild(countDown);
 			
-			startCount();
+			//startCount();
 			
 			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 		}
@@ -36,7 +36,7 @@ package game
 			countTime = 10000;
 			var blink:Function = function():void
 			{
-				countDown.alpha = 0.3;
+				countDown.alpha = 0.15;
 				TweenLite.to(countDown, 1, {alpha: 0, onComplete: blink, ease: Linear.easeNone});
 			};
 			blink();
