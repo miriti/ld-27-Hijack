@@ -45,9 +45,7 @@ package game
 		}
 		
 		protected function initPlayer():void
-		{
-			_player.attachMaze(_maze);
-			
+		{		
 			addChild(_player);
 			addChild(_crosshair);
 		}

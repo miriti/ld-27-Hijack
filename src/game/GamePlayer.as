@@ -2,6 +2,9 @@ package game
 {
 	import flash.events.NetStatusEvent;
 	import flash.ui.Keyboard;
+	import game.weapons.Bullet;
+	import game.weapons.ShotgunBullet;
+	import nape.geom.Vec2;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
 	import nape.shape.Circle;
@@ -21,27 +24,24 @@ package game
 		private static var _image:Class;
 		private var _crosshar:Crosshair;
 		static private var _lastPlayer:GamePlayer;
-		private var _body:Body;
 		
 		public function GamePlayer(crosshair:Crosshair)
 		{
 			_crosshar = crosshair;
-			_radius = 20;
 			
 			_lastPlayer = this;
 			
 			_body = new Body(BodyType.DYNAMIC);
-			_body.shapes.add(new Circle(_radius));
+			var c:Circle = new Circle(20);
+			//c.filter.collisionGroup = Physix.GROUP_PLAYER;
+			c.filter.collisionMask = Physix.GROUP_WALLS | Physix.GROUP_ENEMY;
+			_body.shapes.add(c);
 			Physix.space.bodies.add(_body);
 		}
 		
 		override protected function init():void
 		{
 			addImage(new _image());
-			
-			var centr:Quad = new Quad(_radius, _radius, 0xff0000);
-			centr.x = centr.y = -centr.width / 2;
-			addChild(centr);
 			
 			Input.instance.addMouseDownHook(onMouseDown);
 			Input.instance.addMouseUpHook(onMouseUp);
@@ -59,17 +59,20 @@ package game
 		
 		protected function fireStart():void
 		{
-		
+			for (var i:int = 0; i < 5; i++)
+			{
+				var sb:ShotgunBullet = new ShotgunBullet();
+				var rndAngle:Number = (rotation - Math.PI) + ((-Math.PI / 32) + (Math.random() * (Math.PI / 16)));
+				var v:Vec2 = new Vec2(Math.cos(rndAngle), Math.sin(rndAngle));
+				sb.fire(v);
+				sb.setPosition(x, y);
+				parent.addChild(sb);
+			}
 		}
 		
 		protected function fireEnd():void
 		{
 		
-		}
-		
-		public function setPosition(newX:Number, newY:Number):void
-		{
-			_body.position.setxy(newX, newY);
 		}
 		
 		override protected function update(deltaTime:Number):void
@@ -80,24 +83,33 @@ package game
 			{
 				_body.velocity.y = -SPEED;
 			}
-			
-			if (Input.instance.isDown())
+			else
 			{
-				_body.velocity.y = SPEED;
+				if (Input.instance.isDown())
+				{
+					_body.velocity.y = SPEED;
+				}
+				else
+				{
+					_body.velocity.y = 0;
+				}
 			}
 			
 			if (Input.instance.isRight())
 			{
 				_body.velocity.x = SPEED;
 			}
-			
-			if (Input.instance.isLeft())
+			else
 			{
-				_body.velocity.x = -SPEED;
-			}		
-			
-			x = _body.position.x;
-			y = _body.position.y;
+				if (Input.instance.isLeft())
+				{
+					_body.velocity.x = -SPEED;
+				}
+				else
+				{
+					_body.velocity.x = 0;
+				}
+			}
 			
 			super.update(deltaTime);
 		}

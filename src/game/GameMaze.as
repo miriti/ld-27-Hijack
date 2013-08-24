@@ -33,7 +33,10 @@ package game
 				{
 					if (bitmap.bitmapData.getPixel32(i, j) == 0xff000000)
 					{
-						_mazeBody.shapes.add(new Polygon(Polygon.rect(i * scale, j * scale, scale, scale)));
+						var p:Polygon = new Polygon(Polygon.rect(i * scale, j * scale, scale, scale));
+						p.filter.collisionGroup = Physix.GROUP_WALLS;
+						p.cbTypes.add(Physix.TYPE_WALL);
+						_mazeBody.shapes.add(p);
 					}
 					
 					if (bitmap.bitmapData.getPixel32(i, j) == 0xffff0000)

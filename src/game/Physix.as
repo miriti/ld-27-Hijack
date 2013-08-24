@@ -1,5 +1,6 @@
 package game
 {
+	import nape.callbacks.CbType;
 	import nape.geom.Vec2;
 	import nape.space.Space;
 	
@@ -10,6 +11,15 @@ package game
 	public class Physix
 	{
 		private static var _space:Space;
+		
+		public static const GROUP_PLAYER:int = 0;
+		public static const GROUP_BULLETS:int = 2;
+		public static const GROUP_ENEMY:int = 4;
+		public static const GROUP_WALLS:int = 8;
+		public static const GROUP_ENEMY_BULLETS:int = 16;
+		
+		public static const TYPE_WALL:CbType = new CbType();
+		static public const TYPE_BULLET:CbType = new CbType();
 		
 		static public function update(deltaTime:Number):void
 		{
@@ -25,6 +35,7 @@ package game
 			else
 			{
 				_space = new Space(Vec2.get(0, 0));
+				_space.worldLinearDrag = 0;
 			}
 		}
 		

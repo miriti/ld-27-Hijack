@@ -79,12 +79,18 @@ package game
 		
 		private function onMouseUp():void
 		{
-		
+			for (var i:int = 0; i < _mouseUpHooks.length; i++)
+			{
+				_mouseUpHooks[i].call();
+			}
 		}
 		
 		private function onMouseDown():void
 		{
-		
+			for (var i:int = 0; i < _mouseDownHooks.length; i++)
+			{
+				_mouseDownHooks[i].call();
+			}
 		}
 		
 		private function onKeyUp(e:KeyboardEvent):void

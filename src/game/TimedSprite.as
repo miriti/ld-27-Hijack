@@ -12,6 +12,7 @@ package game
 		
 		public function TimedSprite()
 		{
+			super();
 			addEventListener(EnterFrameEvent.ENTER_FRAME, onEnterFrame);
 		}
 		

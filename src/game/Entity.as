@@ -1,6 +1,7 @@
 package game
 {
 	import flash.display.Bitmap;
+	import nape.phys.Body;
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
@@ -12,20 +13,15 @@ package game
 	 */
 	public class Entity extends TimedSprite
 	{
+		protected var _body:Body;
 		private var _dead:Boolean;
-		private var _maze:GameMaze = null;
 		protected var _health:Number;
 		protected var _healthMax:Number;
-		protected var _radius:Number = 10;
 		
 		public function Entity()
 		{
+			super();
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-		}
-		
-		public function attachMaze(maze:GameMaze):void
-		{
-			_maze = maze;
 		}
 		
 		private function onAddedToStage(e:Event):void
@@ -58,7 +54,11 @@ package game
 		
 		override protected function update(deltaTime:Number):void
 		{
-			
+			if (_body != null)
+			{
+				x = _body.position.x;
+				y = _body.position.y;
+			}
 		}
 		
 		protected function setHealth(newHealth:Number):void
@@ -75,6 +75,12 @@ package game
 			}
 		}
 		
+		public function setPosition(newX:Number, newY:Number):void
+		{
+			x = _body.position.x = newX;
+			y = _body.position.y = newY;
+		}
+		
 		protected function death():void
 		{
 			deathAction();
@@ -89,12 +95,6 @@ package game
 		{
 			_healthMax = _health = newHealth;
 		}
-		
-		public function get radius():Number 
-		{
-			return _radius;
-		}
-	
 	}
 
 }

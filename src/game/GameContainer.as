@@ -17,7 +17,7 @@ package game
 		public function GameContainer()
 		{
 			addChild(new NineEleven());
-			//addChild(new GameHUD());
+			addChild(new GameHUD());
 			
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 			addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
