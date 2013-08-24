@@ -15,11 +15,14 @@ package game
 		[Embed(source="../assets/entities/player/player.png")]
 		private static var _image:Class;
 		private var _crosshar:Crosshair;
+		static private var _lastPlayer:GamePlayer;
 		
 		public function GamePlayer(crosshair:Crosshair)
 		{
 			_crosshar = crosshair;
 			_radius = 20;
+			
+			_lastPlayer = this;
 		}
 		
 		override protected function init():void
@@ -79,6 +82,11 @@ package game
 			}
 			
 			super.update(deltaTime);
+		}
+		
+		static public function get lastPlayer():GamePlayer
+		{
+			return _lastPlayer;
 		}
 	
 	}

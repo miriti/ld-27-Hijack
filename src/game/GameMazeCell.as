@@ -1,5 +1,6 @@
 package game
 {
+	import game.mazeCells.PlayerPosition;
 	import game.mazeCells.WallCell;
 	
 	/**
@@ -21,6 +22,9 @@ package game
 			{
 				case 0xff000000: 
 					return new WallCell(scale);
+					break;
+				case 0xffff0000:
+					return new PlayerPosition();
 					break;
 				default: 
 					return null;

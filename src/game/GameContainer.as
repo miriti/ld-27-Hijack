@@ -1,6 +1,7 @@
 package game
 {
 	import flash.ui.Mouse;
+	import game.missions.NineEleven;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	
@@ -15,7 +16,7 @@ package game
 		
 		public function GameContainer()
 		{
-			addChild(new GameWorld());
+			addChild(new NineEleven());
 			addChild(new GameHUD());
 			
 			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);

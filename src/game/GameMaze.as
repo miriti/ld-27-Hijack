@@ -3,6 +3,7 @@ package game
 	import flash.display.Bitmap;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import game.mazeCells.PlayerPosition;
 	
 	/**
 	 * ...
@@ -25,17 +26,19 @@ package game
 				for (var j:int = 0; j < bitmap.height; j++)
 				{
 					_cells[i][j] = GameMazeCell.factory(bitmap.bitmapData.getPixel32(i, j), scale);
+					if (_cells[i][j] is PlayerPosition)
+					{
+						GamePlayer.lastPlayer.x = i * scale + scale / 2;
+						GamePlayer.lastPlayer.y = j * scale + scale / 2;
+						
+						trace(GamePlayer.lastPlayer.x, GamePlayer.lastPlayer.y);
+					}
 				}
 			}
 		}
 		
 		public function collisionEntity(ent:Entity):void
 		{
-			/*var minCellX:int = Math.floor((ent.x - ent.radius) / _scale);
-			   var minCellY:int = Math.floor((ent.y - ent.radius) / _scale);
-			   var maxCallX:int = Math.floor((ent.x + ent.radius) / _scale);
-			 var maxCellY:int = Math.floor((ent.y + ent.radius) / _scale);*/
-			
 			var minCellX:int = Math.floor(ent.x / _scale) - 2;
 			var minCellY:int = Math.floor(ent.y / _scale) - 2;
 			var maxCallX:int = Math.floor(ent.x / _scale) + 2;
@@ -91,7 +94,11 @@ package game
 						}
 						else
 						{
-							// corner?
+							var leftTop:Point = new Point(ent.x - cellRect.topLeft.x, ent.y - cellRect.topLeft.y);
+							if (Math.abs(leftTop.length) <= ent.radius)
+							{
+								trace(leftTop.length);
+							}
 						}
 					}
 				}
@@ -115,7 +122,11 @@ package game
 						}
 						else
 						{
-							// corner?
+							var leftBottom:Point = new Point(ent.x - cellRect.x, ent.y - cellRect.bottom);
+							if (Math.abs(leftBottom.length) <= ent.radius)
+							{
+								trace(leftBottom.length);
+							}
 						}
 					}
 				}
@@ -143,7 +154,11 @@ package game
 						}
 						else
 						{
-							// corner?
+							var rightTop:Point = new Point(ent.x - cellRect.right, ent.y - cellRect.top);
+							if (Math.abs(rightTop.length) <= ent.radius)
+							{
+								trace(rightTop.length);
+							}
 						}
 					}
 				}
@@ -167,7 +182,11 @@ package game
 						}
 						else
 						{
-							// corner?
+							var rightBottom:Point = new Point(ent.x - cellRect.right, ent.y - cellRect.bottom);
+							if (Math.abs(rightBottom.length) <= ent.radius)
+							{
+								trace(rightBottom.length);
+							}
 						}
 					}
 				}
