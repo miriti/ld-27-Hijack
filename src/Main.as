@@ -15,6 +15,9 @@ package
 	{
 		private var starlingInstance:Starling;
 		
+		public static var sceneWidth:int = 1024;
+		public static var sceneHeight:int = 576;
+		
 		public function Main():void
 		{
 			if (stage)

@@ -1,4 +1,4 @@
-package game 
+package game
 {
 	import starling.display.Sprite;
 	
@@ -6,14 +6,26 @@ package game
 	 * ...
 	 * @author Michael Miriti
 	 */
-	public class StateControll extends Sprite 
+	public class StateControll extends Sprite
 	{
+		private var _currentState:Sprite;
 		
-		public function StateControll() 
+		public function StateControll()
 		{
-			
+			setState(new GameContainer());
 		}
 		
+		public function setState(state:Sprite):void
+		{
+			if (_currentState != null)
+			{
+				removeChild(_currentState);
+			}
+			
+			_currentState = state;
+			
+			addChild(_currentState);
+		}
 	}
 
 }
