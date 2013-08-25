@@ -23,7 +23,7 @@ package game
 		
 		public function GameHUD()
 		{
-			countDown = new TextField(Main.sceneWidth, Main.sceneHeight, "10", "Verdana", 500);
+			countDown = new TextField(Main.sceneWidth, Main.sceneHeight, "0", "Verdana", 500);
 			countDown.vAlign = VAlign.CENTER;
 			countDown.hAlign = HAlign.CENTER;
 			countDown.autoScale = true;
@@ -60,9 +60,11 @@ package game
 				if (secs != prevSecs)
 				{
 					countDown.text = secs;
-					countDown.alpha = 0.15;
+					countDown.alpha = 0.15 * (1 - (countTime / 10000));
 					if (blinkTween != null)
+					{
 						blinkTween.kill();
+					}
 					
 					blinkTween = TweenLite.to(countDown, 1, {alpha: 0, ease: Linear.easeNone});
 				}

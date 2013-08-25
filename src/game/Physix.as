@@ -17,9 +17,14 @@ package game
 		public static const GROUP_ENEMY:int = 4;
 		public static const GROUP_WALLS:int = 8;
 		public static const GROUP_ENEMY_BULLETS:int = 16;
+		static public const GROUP_SEATS:int = 32;
 		
-		public static const TYPE_WALL:CbType = new CbType();
+		static public const TYPE_WALL:CbType = new CbType();
 		static public const TYPE_BULLET:CbType = new CbType();
+		static public const TYPE_ENEMY:CbType = new CbType();
+		static public const TYPE_MOB:CbType = new CbType();
+		static public const TYPE_BLOOD:CbType = new CbType();
+		static public const TYPE_ANY:CbType = new CbType();
 		
 		static public function update(deltaTime:Number):void
 		{

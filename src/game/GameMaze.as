@@ -1,9 +1,6 @@
 package game
 {
 	import flash.display.Bitmap;
-	import flash.geom.Point;
-	import flash.geom.Rectangle;
-	import game.mazeCells.PlayerPosition;
 	import nape.phys.Body;
 	import nape.phys.BodyType;
 	import nape.shape.Polygon;
@@ -14,35 +11,42 @@ package game
 	 */
 	public class GameMaze
 	{
-		private var _cells:Vector.<Vector.<GameMazeCell>>;
 		private var _scale:Number;
 		private var _mazeBody:Body;
 		
-		public function GameMaze(bitmap:Bitmap, scale:Number = 20)
+		public function GameMaze(world:GameWorld, bitmap:Bitmap, scale:Number = 20)
 		{
 			_scale = scale;
-			_cells = new Vector.<Vector.<GameMazeCell>>();
 			
 			_mazeBody = new Body(BodyType.STATIC);
 			
 			for (var i:int = 0; i < bitmap.width; i++)
 			{
-				_cells[i] = new Vector.<GameMazeCell>();
-				
 				for (var j:int = 0; j < bitmap.height; j++)
 				{
-					if (bitmap.bitmapData.getPixel32(i, j) == 0xff000000)
+					var nx:Number = i * scale + scale / 2;
+					var ny:Number = j * scale + scale / 2;
+					var col:uint = bitmap.bitmapData.getPixel32(i, j);
+					
+					if ((col == 0xff000000) || (col == 0xff404040))
 					{
 						var p:Polygon = new Polygon(Polygon.rect(i * scale, j * scale, scale, scale));
-						p.filter.collisionGroup = Physix.GROUP_WALLS;
-						p.cbTypes.add(Physix.TYPE_WALL);
+						if (col == 0xff404040)
+						{
+							p.filter.collisionGroup = Physix.GROUP_SEATS;
+						}
+						else
+						{
+							p.filter.collisionGroup = Physix.GROUP_WALLS;
+							p.cbTypes.add(Physix.TYPE_WALL);
+						}
 						_mazeBody.shapes.add(p);
 					}
 					
-					if (bitmap.bitmapData.getPixel32(i, j) == 0xffff0000)
+					if (col == 0xffff0000)
 					{
-						GamePlayer.lastPlayer.setPosition(i * scale + scale / 2, j * scale + scale / 2);
-					}
+						GamePlayer.lastPlayer.setPosition(nx, ny);
+					}					
 				}
 			}
 			

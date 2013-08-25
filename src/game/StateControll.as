@@ -9,10 +9,12 @@ package game
 	public class StateControll extends Sprite
 	{
 		private var _currentState:Sprite;
+		static private var _instance:StateControll;
 		
 		public function StateControll()
 		{
-			setState(new GameContainer());
+			_instance = this;
+			setState(new InstructionState());
 		}
 		
 		public function setState(state:Sprite):void
@@ -25,6 +27,11 @@ package game
 			_currentState = state;
 			
 			addChild(_currentState);
+		}
+		
+		static public function get instance():StateControll 
+		{
+			return _instance;
 		}
 	}
 

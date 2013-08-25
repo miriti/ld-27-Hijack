@@ -14,7 +14,7 @@ package game
 	public class Entity extends TimedSprite
 	{
 		protected var _body:Body;
-		private var _dead:Boolean;
+		protected var _dead:Boolean;
 		protected var _health:Number;
 		protected var _healthMax:Number;
 		
@@ -32,10 +32,14 @@ package game
 		
 		protected function init():void
 		{
-		
+			if (_body != null)
+			{
+				_body.cbTypes.add(Physix.TYPE_ANY);
+				_body.space = Physix.space;
+			}
 		}
 		
-		protected function addImage(bmp:Bitmap, center:Boolean = true):void
+		protected function addImage(bmp:Bitmap, center:Boolean = true):Image
 		{
 			var newImage:Image = new Image(Texture.fromBitmap(bmp));
 			if (center)
@@ -45,11 +49,13 @@ package game
 			}
 			
 			addChild(newImage);
+			
+			return newImage;
 		}
 		
 		public function hit(hitPoints:Number):void
 		{
-		
+			setHealth(_health - hitPoints);
 		}
 		
 		override protected function update(deltaTime:Number):void
@@ -94,6 +100,11 @@ package game
 		protected function initHealth(newHealth:Number):void
 		{
 			_healthMax = _health = newHealth;
+		}
+		
+		public function get dead():Boolean
+		{
+			return _dead;
 		}
 	}
 
